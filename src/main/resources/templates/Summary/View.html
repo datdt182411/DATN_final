@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:replace="header :: myHeader"></div>
+</head>
+<body class="sb-nav-fixed">
+<div th:replace="navbar :: myNavbar"></div>
+<div id="layoutSidenav">
+  <div th:replace="sidebar :: mySidebar"></div>
+  <div id="layoutSidenav_content">
+    <div class="container">
+      <br>
+      <hr>
+      <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
+        <li class="breadcrumb-item active">Thống kê doanh thu</li>
+        <h5 th:text="${mess}" style="color: red"></h5>
+        <h5 th:text="${sucess}" style="color: green"></h5>
+      </ol>
+
+      <br>
+      <div class="row">
+        <div class="col-9">
+          <form th:action="@{/searchType}" method="get">
+            <div class="row p-2">
+              <div class="col-7">
+                <input type="text" class="form-control"
+                       id="keyword" name="keyword"
+                >
+              </div>
+              <div class="col-3">
+                <button type="submit" class="btn btn-outline-secondary shadow-sm rounded"
+                        id="search">Search</button>
+              </div>
+
+            </div>
+          </form>
+        </div>
+      </div>
+      <br>
+      <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+        <tr>
+          <th>Tháng </th>
+          <th th:each="month:${months}" th:text="${month}"></th>
+
+        </tr>
+        </thead>
+        <tbody th:if="${#lists.isEmpty(months)}">
+        <tr>
+          <td colspan="3" style="color: red;">No Data found</td>
+        </tr>
+        </tbody>
+        <tbody id="myTable">
+        <tr >
+          <th> Tổng đơn hàng </th>
+          <th th:each="o : ${orders}" th:text="${o}"></th>
+        </tr>
+
+        <tr >
+          <th> Tổng doanh thu (VNĐ) </th>
+          <th th:each="o : ${amounts}" th:text="${o}"></th>
+        </tr>
+
+        </tbody>
+      </table>
+      <a class="btn btn-outline-success" href="https://sandbox.vnpayment.vn/merchantv2/"> Thống kê các đơn hàng thanh toán qua web </a>
+    </div>
+    <script type="text/javascript">
+      document.getElementById("myButton").onclick = function() {
+        location.href = "ItemCreate";
+      };
+    </script>
+  </div>
+</div>
+<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

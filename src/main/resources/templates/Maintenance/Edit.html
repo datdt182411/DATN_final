@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="header :: myHeader"></div>
+</head>
+<body class="sb-nav-fixed">
+<div th:replace="navbar :: myNavbar"></div>
+<div id="layoutSidenav">
+    <div th:replace="sidebar :: mySidebar"></div>
+    <!-- Form starts from here -->
+    <div id="layoutSidenav_content">
+        <div class="container">
+            <br>
+            <hr>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
+                <li class="breadcrumb-item active">Cập nhật thông tin bảo hành</li>
+                <h5 th:text="${mess}" style="color: red"></h5>
+                <h5 th:text="${sucess}" style="color: green"></h5>
+            </ol>
+            <form class="needs-validation" th:action="@{/ItemMaintenanceEdit}"
+                  th:object="${maintenanceOrder}" method="post" >
+                <!-- Text input-->
+
+                <div class="form-group">
+                    <input  th:field="*{id}" type="hidden" >
+                    <input  th:field="*{orderLine.id}" type="hidden" >
+                </div>
+
+                <fieldset class="border p-2">
+                    <legend class="w-auto"> Cập nhật thông tin bảo hành</legend>
+
+<!--                    <div class="form-group">-->
+<!--                        <label >Mã sản phẩm</label>-->
+<!--                        <input type="text" name="productId" class="form-control"-->
+<!--                               placeholder="Nhập mã sản phẩm" th:field="*{product.id}" >-->
+<!--                    </div>-->
+
+                    <div class="form-group">
+                        <label >Mã số serial sản phẩm</label>
+                        <input type="text" name="serialNumber" class="form-control"
+                               placeholder="Nhập mã serial sản phẩm " th:field="*{serialNumber}" >
+                    </div>
+
+<!--                    <div class="form-group">-->
+<!--                        <label >Tên khách hàng</label>-->
+<!--                        <input type="text" name="customerName" class="form-control"-->
+<!--                               placeholder="Nhập tên khách hàng" th:field="*{orderLine.order.customer.name}" >-->
+<!--                    </div>-->
+
+<!--                    <div class="form-group">-->
+<!--                        <label >Số điện thoại</label>-->
+<!--                        <input type="text" name="phone" class="form-control"-->
+<!--                               placeholder="Nhập số điện thoại của khách hàng" th:field="*{orderLine.order.customer.phone}" >-->
+<!--                    </div>-->
+
+
+                    <div class="form-group">
+                        <label >Ngày kích hoạt</label>
+                        <input
+                                type="date"
+                                placeholder="Ngày bắt đầu" th:field="*{startDate}"
+                                class="form-control">
+
+                    </div>
+
+                    <div class="form-group">
+                        <label >Ngày hết hạn</label>
+                        <input type="date"
+                               placeholder="Ngày kết thúc" th:field="*{endDate}"
+                               class="form-control" >
+                    </div>
+
+                    <div class="form-group">
+                        <label >Ngày bảo hành sản phẩm</label>
+                        <input type="date"
+                               placeholder="Ngày bảo hành sản phẩm" th:field="*{maintenanceDate}"
+                               class="form-control" >
+                    </div>
+
+                    <div class="form-group">
+                        <label >Chú thích</label>
+                        <input th:field="*{description}"
+                               class="form-control" >
+                    </div>
+
+
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label"></label>
+                        <div class="col-md-4">
+                            <a href="/Maintenance" id="resetBtn" type="reset" class="btn btn-danger ">Quay Lại</a>
+                            <button id="addBtn" type="submit"
+                                    class="btn btn-success float-right">Chỉnh Sửa</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<div></div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thiết bị y tế</title>
+  <!--
+      - favicon
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+  <!--
+      - custom css link
+  -->
+  <link href="/css/order.css" rel="stylesheet"/>
+  <link
+          href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"
+          rel="stylesheet" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script
+          src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"
+          crossorigin="anonymous"></script>
+  <!--
+      - google front link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+          href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+          rel="stylesheet">
+
+  <!--
+      - preload banner
+  -->
+  <link rel="preload" href="/img/hero-banner.png" as="image">
+
+  <!--
+      - btn search
+  -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+
+
+<!--
+    - #HEADER
+-->
+
+<header class="header " data-header>
+  <div class="container">
+
+    <div class="overlay" data-overlay></div>
+
+    <a href="/" class="logo">
+      <img src="/img/vinamed.svg" width="160" height="50" alt="Footcap logo">
+    </a>
+
+    <button class="nav-open-btn" data-nav-open-btn aria-label="Open Menu">
+      <ion-icon name="menu-outline"></ion-icon>
+    </button>
+
+    <nav class="navbar" data-navbar>
+
+      <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+
+
+      <a href="#" class="logo">
+        <img src="img/vinamed.svg" width="190" height="50" alt="Footcap logo">
+      </a>
+      <!--
+          #List function of Web
+      -->
+      <ul class="navbar-list" style="list-style:none">
+
+        <li class="navbar-item">
+          <a href="/" class="navbar-link">TRANG CHỦ</a>
+        </li>
+
+        <li class="navbar-item">
+          <a href="/intro" class="navbar-link">GIỚI THIỆU</a>
+        </li>
+
+        <li class="navbar-item">
+          <a href="/product?id=1" class="navbar-link">SẢN PHẨM</a>
+
+        </li>
+        <li class="navbar-item">
+          <a href="/contact" class="navbar-link">LIÊN HỆ</a>
+        </li>
+
+        <li th:if="${userAuthen}=='ADMIN'">
+          <a href="/home" class="navbar-link"> QUẢN LÝ</a>
+        </li>
+      </ul>
+      <!--
+          #List action of Web
+      -->
+      <ul class="nav-action-list" style="list-style:none">
+        <li>
+          <a href="" class="nav-action-btn">
+            <p th:if="${userAuthen}!=null" th:text="'Wellcome :'+ ${userAuthen}" class="">
+            </p>
+          </a>
+        </li>
+        <li th:if="${userAuthen}!=null">
+          <a  href="/logout" class="nav-action-btn">
+            <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+            <p>Đăng Xuất</p>
+          </a>
+        </li>
+        <li th:if="${userAuthen}==null">
+          <a href="/login" class="nav-action-btn">
+            <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+            <p>Đăng Nhập</p>
+          </a>
+        </li>
+        <li th:if="${userAuthen}==null">
+          <a href="/register" class="nav-action-btn">
+            <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+            <p>Đăng Ký</p>
+          </a>
+        </li>
+        <div sec:authorize="hasRole('MEMBER')">Text visible to admin.</div>
+        <!--                sec:authorize="hasAnyRole('ADMIN','MEMBER','STOCKER','TECHNICIAN','SALE')"-->
+        <li  >
+          <a href="/order" class="nav-action-btn">
+            <ion-icon name="bag-outline" aria-hidden="true"></ion-icon>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+</header>
+<hr>
+
+<main >
+  <div class="container pt-5">
+    <div class="row mt-5">
+      <div  class="col-12">
+
+
+        <table class="table table-light table-bordered table-hover">
+          <thead class="thead-light">
+          <!--                <tr>-->
+          <!--                    <th>tên sản phẩm</th>-->
+          <!--                    <th>giá</th>-->
+          <!--                    <th>số lượng</th>-->
+          <!--                </tr>-->
+          </thead>
+          <tbody th:if="${#lists.isEmpty(productName)}">
+          <tr>
+            <td colspan="3" style="color: red;">No Data found</td>
+          </tr>
+          </tbody>
+          <tbody id="myTable">
+          <tr >
+            <th>Tên Sản Phẩm</th>
+            <th th:each="o : ${productName}" th:text="${o}"></th>
+          </tr>
+          <tr >
+            <th>Ảnh</th>
+            <th th:each="o : ${photos}">
+              <img width="150" height="150" th:src="'/img/'+${o}">
+            </th>
+          </tr>
+          <tr >
+            <th>Giá</th>
+            <th th:each="o : ${prices}" th:text="${#numbers.formatCurrency(o)}"></th>
+          </tr>
+          <tr >
+            <th>Số Lượng</th>
+            <th th:each="o : ${quantities}" th:text="${o}"></th>
+          </tr>
+          <tr >
+            <th></th>
+<!--            <th th:each="o : ${quantities}">-->
+<!--           <a th:if="${order.orderStatus.name() == 'DELIVERED'}"-->
+<!--                    th:href="@{/ItemMaintenanceEdit}"-->
+<!--                    class="btn btn-primary"> Đánh giá sản phẩm </a></th>-->
+
+<!--            <td><a-->
+<!--                    th:href="@{/ItemRepairEdit(id=${itemRepair.id})}"-->
+<!--                    class="btn btn-primary"> Edit </a>-->
+<!--            </td>-->
+            <th th:each="itemReview : ${order.getOrderLineList()}">
+              <a th:if="${!itemReview.product.reviewedByUser && itemReview.product.userCanReview && order?.orderStatus?.name() == 'DELIVERED' }"
+                 th:href="@{/write_review/product(id=${itemReview.product.getId()})}"
+                 class="btn btn-info"> Đánh giá sản phẩm </a>
+
+              <a th:if="${itemReview.product.reviewedByUser}"
+                 th:href="@{'/ratings/' + ${itemReview.product.id}}"
+                 class="btn btn-warning"> Xem đánh giá sản phẩm </a>
+<!--              <a th:if="${}"-->
+<!--                 th:href="@{/ItemMaintenanceEdit}"-->
+<!--                 class="btn btn-primary"> Xem Đánh giá của bạn </a>-->
+            </th>
+          </tr>
+
+
+
+          </th>
+          </tbody>
+        </table>
+        <h4 th:text="'Tổng đơn hàng: '+ ${#numbers.formatCurrency(order.amount)} "></h4>
+      </div>
+    </div>
+<!--    <div th:switch="${order.getStatus()}">-->
+<!--    <a th:if="${order.getStatus() == 1 && order.getPaymentMethod() != 'CASH' }"  class="btn btn-primary" th:href="'test-pay-vnpay?amount='+${total}+'&bankcode=NCB&language=vi&txt_billing_mobile=mobile&txt_billing_email=quanganhsaker@gmail.com&txt_billing_fullname=quang%20anh&txt_inv_addr1=ha%20noi&txt_bill_city=ha%20noi&txt_bill_country=viet%20nam&txt_bill_state=ha%20noi&txt_inv_mobile=0389355471&txt_inv_email=nongoanh2000@gmail.com&txt_inv_customer=Nguy%E1%BB%85n%20Van%20A&txt_inv_addr1=ha%20noi&city&txt_inv_company=fsoft&txt_inv_taxcode=10&cbo_inv_type=other&vnp_OrderType=other&vnp_OrderInfo=order%20info%20test'">Thanh toán</a>-->
+<!--    </div>-->
+
+<!--Đang lỗi hiển thị button-->
+     <a th:if="${order.getStatus() == 1 && order.paymentMethod.name() != 'CASH' && order.orderStatus.name() != 'DELIVERED' }" class="btn btn-primary" th:href="'test-vnpay?amount='+${total}+'&bankcode=NCB&language=vi&txt_billing_mobile=mobile&txt_billing_email=quanganhsaker@gmail.com&txt_billing_fullname=quang%20anh&txt_inv_addr1=ha%20noi&txt_bill_city=ha%20noi&txt_bill_country=viet%20nam&txt_bill_state=ha%20noi&txt_inv_mobile=0389355471&txt_inv_email=nongoanh2000@gmail.com&txt_inv_customer=Nguy%E1%BB%85n%20Van%20A&txt_inv_addr1=ha%20noi&city&txt_inv_company=fsoft&txt_inv_taxcode=10&cbo_inv_type=other&vnp_OrderType=other&vnp_OrderInfo=order%20info%20test&vnp_TxnRef='+${order.getId()}">
+       Thanh toán</a>
+
+
+  </div>
+</main>
+
+
+
+<!--
+    - custom js link
+-->
+<script src="js/script.js"></script>
+
+<!--
+    - iomicon link
+-->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>

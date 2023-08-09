@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:replace="header :: myHeader"></div>
+</head>
+<body class="sb-nav-fixed">
+	<div th:replace="navbar :: myNavbar"></div>
+	<div id="layoutSidenav">
+		<div th:replace="sidebar :: mySidebar"></div>
+		<!--- Navbar ends here--->
+		<!-- Form starts from here -->
+		<div id="layoutSidenav_content">
+			<div class="container">
+				<br>
+<!--				<div class="spinner-grow text-muted"></div>-->
+<!--				<div class="spinner-grow text-primary"></div>-->
+<!--				<div class="spinner-grow text-success"></div>-->
+<!--				<div class="spinner-grow text-info"></div>-->
+<!--				<div class="spinner-grow text-warning"></div>-->
+<!--				<div class="spinner-grow text-danger"></div>-->
+<!--				<div class="spinner-grow text-secondary"></div>-->
+<!--				<div class="spinner-grow text-dark"></div>-->
+<!--				<div class="spinner-grow text-light"></div>-->
+				<hr>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
+					<li class="breadcrumb-item active">Edit Repair Item</li>
+				</ol>
+				<form th:action="@{/ItemRepairEdit}" th:object="${repair}"
+					method="post" >
+					<div class="form-group">
+						<input  name="id" th:field="*{id}" type="hidden">
+<!--						<input  th:field="*{product.id}" type="hidden">-->
+
+					</div>
+
+					<div class="alert alert-danger"
+						th:if="${#fields.hasErrors('global')}">
+						<ul>
+							<li th:each="err : ${#fields.errors('global')}" th:text="${err}"></li>
+						</ul>
+					</div>
+
+					<fieldset class="border p-2">
+						<legend class="w-auto"> Cập nhật thông tin bảo hành </legend>
+
+						<div class="form-group">
+							<label >Tình trạng lỗi</label>
+							<input type="text" name="failure" class="form-control"
+								   placeholder="Nhập tình trạng lỗi" th:field="*{failure}" >
+						</div>
+
+						<div class="form-group">
+							<label for="">Linh kiện thay thế</label> <input
+								placeholder="Enter replacement component information" th:field="*{replacementComponent}"
+								class="form-control" min="0" step="any">
+						</div>
+
+						<div class="form-group">
+							<label >Ngày hỏng thiết bị</label>
+							<input type="date" class="form-control" name="failureDate"
+								   th:field="*{failureDate}" >
+						</div>
+
+						<div class="form-group">
+							<label >Ngày bảo hành</label>
+							<input type="date" class="form-control" name="fixedDate"
+								 th:field="*{fixedDate}" >
+						</div>
+
+						<div class="form-group">
+							<label >Item Price</label>
+							<input type="number" name="price"
+								   placeholder="Item Price" th:field="*{price}"
+								   class="form-control" min="0" step="any">
+						</div>
+
+
+
+						<div class="form-group">
+<!--							<button type="submit" class="btn btn-success float-right">Submit</button>-->
+<!--							<button type="reset" class="btn btn-danger">Reset</button>-->
+
+<!--							<button id="resetBtn" type="reset" class="btn btn-danger ">Quay Lại</button>-->
+							<a href="/Repair" id="resetBtn" type="reset" class="btn btn-danger ">Quay Lại</a>
+							<button id="addBtn" type="submit"
+									class="btn btn-success float-right">Cập Nhật
+							</button>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Form ends here -->
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

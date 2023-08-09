@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:replace="header :: myHeader"></div>
+</head>
+<body class="sb-nav-fixed">
+	<div th:replace="navbar :: myNavbar"></div>
+	<div id="layoutSidenav">
+		<div th:replace="sidebar :: mySidebar"></div>
+		<div id="layoutSidenav_content">
+			<div class="container">
+				<br>
+				<div class="spinner-grow text-muted"></div>
+				<div class="spinner-grow text-primary"></div>
+				<div class="spinner-grow text-success"></div>
+				<div class="spinner-grow text-info"></div>
+				<div class="spinner-grow text-warning"></div>
+				<div class="spinner-grow text-danger"></div>
+				<div class="spinner-grow text-secondary"></div>
+				<div class="spinner-grow text-dark"></div>
+				<div class="spinner-grow text-light"></div>
+				<hr>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
+					<li class="breadcrumb-item active">Delete Inventory Item</li>
+				</ol>
+				<h3>Bạn có chắc chắn muốn Disable sản phẩm này không?</h3>
+				<div>
+					<hr />
+					<dl class="dl-horizontal">
+						<dt>ID</dt>
+						<dd th:text="${product.id}"></dd>
+						<dt>Tên</dt>
+						<dd th:text="${product.name}"></dd>
+						<dt>Giá</dt>
+						<dd th:text="${product.price}"></dd>
+						<dt>Loại</dt>
+						<dd th:text="${product.type.name}"></dd>
+						<dt>Hãng</dt>
+						<dd th:text="${product.vendor.name}"></dd>
+
+					</dl>
+				</div>
+				<form th:action="@{/ItemDelete(id=${product.id})}"
+					method="post">
+					<button type="submit" class="btn btn-danger">Disable</button>
+					<a th:href="@{/ItemView}" class="btn btn-secondary active"> Go
+						Back</a>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

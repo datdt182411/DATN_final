@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:replace="header :: myHeader"></div>
+</head>
+<body class="sb-nav-fixed">
+<div th:replace="navbar :: myNavbar"></div>
+<div id="layoutSidenav">
+  <div th:replace="sidebar :: mySidebar"></div>
+  <div id="layoutSidenav_content">
+    <div class="container">
+      <br>
+      <div style="color: mediumspringgreen;font-size: larger "th:text="${success}"></div>
+      <hr>
+      <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
+        <li class="breadcrumb-item active">Thông tin bảo hành</a></li>
+      </ol>
+
+
+      <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+        <tr>
+          <th>Mã Bảo hành</th>
+          <th>Mã sản phẩm</th>
+          <th>Mã chi tiết đơn hàng</th>
+          <th>Tên sản phẩm</th>
+          <th>Tên khách hàng</th>
+<!--          <th>Chu kì bảo trì</th>-->
+          <th colspan="2" style="text-align: center">Options</th>
+        </tr>
+        </thead>
+        <tbody th:if="${#lists.isEmpty(maintenanceList)}">
+        <tr>
+          <td colspan="3" style="color: red;">No Data found</td>
+        </tr>
+        </tbody>
+        <tbody id="myTable">
+        <tr th:each="itemRepairDto : ${maintenanceList}">
+          <td th:text="${itemRepairDto.id}"></td>
+          <td th:text="${itemRepairDto.orderLine.product.id}"></td>
+          <td th:text="${itemRepairDto.orderLine.id}"></td>
+          <td th:text="${itemRepairDto.orderLine.product.name}"></td>
+          <td th:text="${itemRepairDto.orderLine.order.customer.name}"></td>
+<!--          <td th:text="${itemRepairDto.frequency}"></td>-->
+          <!--          <td><a-->
+          <!--                  th:href="@{/ItemMaintenanceEdit(id=${itemRepairDto.id})}"-->
+          <!--                  class="btn btn-primary"> Edit </a></td>-->
+          <!--          <td><a-->
+          <!--                  th:href="@{/ItemMaintenanceDelete(id=${itemRepairDto.id})}"-->
+          <!--                  class="btn btn-danger"> Delete </a></td>-->
+        </tr>
+        </tbody>
+      </table>
+      <a style="font-size: 20px" type="button" href="/Maintenance"
+         class="btn btn-outline-primary" >
+       Quay Lại
+      </a>
+    </div>
+    <script type="text/javascript">
+      document.getElementById("myButton").onclick = function() {
+        location.href = "ItemRepairCreate";
+      };
+    </script>
+  </div>
+</div>
+<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

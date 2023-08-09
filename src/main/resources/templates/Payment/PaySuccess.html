@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footcap - Find your footware</title>
+    <!--
+        - favicon
+    -->
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+    <!--
+        - custom css link
+    -->
+    <link href="/css/checkout_successful.css" rel="stylesheet"/>
+
+    <!--
+        - google front link
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+            rel="stylesheet">
+
+    <!--
+        - preload banner
+    -->
+    <link rel="preload" href="../static/img/hero-banner.png" as="image">
+
+    <!--
+        - btn search
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+<body>
+
+
+<!--
+    - #HEADER
+-->
+
+<header class="header " data-header>
+    <div class="container">
+
+        <div class="overlay" data-overlay></div>
+
+        <a href="/" class="logo">
+            <img src="/img/vinamed.svg" width="160" height="50" alt="Footcap logo">
+        </a>
+
+        <button class="nav-open-btn" data-nav-open-btn aria-label="Open Menu">
+            <ion-icon name="menu-outline"></ion-icon>
+        </button>
+
+        <nav class="navbar" data-navbar>
+
+            <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+
+
+            <a href="#" class="logo">
+                <img src="img/vinamed.svg" width="190" height="50" alt="Footcap logo">
+            </a>
+            <!--
+                #List function of Web
+            -->
+            <ul class="navbar-list">
+
+                <li class="navbar-item">
+                    <a href="/" class="navbar-link">TRANG CHỦ</a>
+                </li>
+
+                <li class="navbar-item">
+                    <a href="/intro" class="navbar-link">GIỚI THIỆU</a>
+                </li>
+
+                <li class="navbar-item">
+                    <a href="/product?id=1" class="navbar-link">SẢN PHẨM</a>
+
+                </li>
+                <li class="navbar-item">
+                    <a href="/contact" class="navbar-link">LIÊN HỆ</a>
+                </li>
+
+                <li th:if="${userAuthen}=='ADMIN'">
+                    <a href="/home" class="navbar-link"> QUẢN LÝ</a>
+                </li>
+            </ul>
+            <!--
+                #List action of Web
+            -->
+            <ul class="nav-action-list">
+                <li>
+                    <a href="" class="nav-action-btn">
+                        <p th:if="${userAuthen}!=null" th:text="'Wellcome :'+ ${userAuthen}" class="">
+                        </p>
+                    </a>
+                </li>
+                <li th:if="${userAuthen}!=null">
+                    <a  href="/logout" class="nav-action-btn">
+                        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+                        <p>Đăng Xuất</p>
+                    </a>
+                </li>
+                <li th:if="${userAuthen}==null">
+                    <a href="/login" class="nav-action-btn">
+                        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+                        <p>Đăng Nhập</p>
+                    </a>
+                </li>
+                <li th:if="${userAuthen}==null">
+                    <a href="/register" class="nav-action-btn">
+                        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+                        <p>Đăng Ký</p>
+                    </a>
+                </li>
+                <div sec:authorize="hasRole('MEMBER')">Text visible to admin.</div>
+                <!--                sec:authorize="hasAnyRole('ADMIN','MEMBER','STOCKER','TECHNICIAN','SALE')"-->
+                <li  >
+                    <a href="/order" class="nav-action-btn">
+                        <ion-icon name="bag-outline" aria-hidden="true"></ion-icon>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</header>
+
+<div class="container contact-form" >
+    <div class="contact-image" style="align-items: center; display: flex; justify-content: center; margin-top: 50px">
+        <img  width="200" height="200"
+              th:src="'/img/icons/checkout_successful.png'">
+    </div>
+    <div class="row" >
+        <h1 class="" style=" align-items: center; display: flex; justify-content: center">Bạn đã chuyển khoản thành công :
+            <data class="card-price"
+                  th:text="${#numbers.formatCurrency(vnp_Amount)}"></data>
+        </h1>
+    </div>
+    <br>
+    <h3 class="" style=" align-items: center; display: flex; justify-content: center">Vui lòng chờ kỹ thuật viên vận chuyển đơn hàng tới bạn! <br>
+        Hãy quay lại Trang chủ để tiếp tục khám phá các sản phẩm mới nhé !</h3>
+
+    <div style="align-items: center; display: flex; justify-content: center">
+        <a class=" btn btn-outline-primary m-3" href="/"> Quay lại</a>
+    </div>
+</div>
+
+<!--
+- #FOOTER
+-->
+<footer class="footer">
+
+    <div class="footer-top section">
+        <div class="container">
+
+            <div class="footer-link-box">
+
+                <ul class="footer-list">
+
+                    <li>
+                        <p class="footer-list-title">Liên Hệ</p>
+                    </li>
+
+                    <li>
+                        <address class="footer-link">
+                            <ion-icon name="location"></ion-icon>
+
+                            <span class="footer-link-text">
+                Trụ Sở: Toà G3 Vinhomes Green Bay, Mễ Trì, Nam Từ Liêm, Hà Nội
+              </span>
+                        </address>
+                    </li>
+
+                    <li>
+                        <a href="tel: 0243 20 559 29" class="footer-link">
+                            <ion-icon name="call"></ion-icon>
+
+                            <span class="footer-link-text">Tel / Fax: 0243 20 559 29 - Helpline: 096 99 324 99 </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="mailto: congtycophanvattu@gmail.com" class="footer-link">
+                            <ion-icon name="mail"></ion-icon>
+
+                            <span class="footer-link-text">congtycophanvattu@gmail.com</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+                <ul class="footer-list">
+
+                    <li>
+                        <p class="footer-list-title">Tài khoản của tôi</p>
+                    </li>
+
+                    <li>
+                        <a href="#" class="footer-link">
+                            <ion-icon name="chevron-forward-outline"></ion-icon>
+
+                            <span class="footer-link-text">My Account</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="footer-link">
+                            <ion-icon name="chevron-forward-outline"></ion-icon>
+
+                            <span class="footer-link-text">View Cart</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="footer-link">
+                            <ion-icon name="chevron-forward-outline"></ion-icon>
+
+                            <span class="footer-link-text">Wishlist</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="footer-link">
+                            <ion-icon name="chevron-forward-outline"></ion-icon>
+
+                            <span class="footer-link-text">Compare</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#" class="footer-link">
+                            <ion-icon name="chevron-forward-outline"></ion-icon>
+
+                            <span class="footer-link-text">New Products</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+                <div class="footer-list">
+
+                    <p class="footer-list-title">Opening Time</p>
+
+                    <table class="footer-table">
+                        <tbody>
+
+                        <tr class="table-row">
+                            <th class="table-head" scope="row">Mon - Tue:</th>
+
+                            <td class="table-data">8AM - 10PM</td>
+                        </tr>
+
+                        <tr class="table-row">
+                            <th class="table-head" scope="row">Wed:</th>
+
+                            <td class="table-data">8AM - 7PM</td>
+                        </tr>
+
+                        <tr class="table-row">
+                            <th class="table-head" scope="row">Fri:</th>
+
+                            <td class="table-data">7AM - 12PM</td>
+                        </tr>
+
+                        <tr class="table-row">
+                            <th class="table-head" scope="row">Sat:</th>
+
+                            <td class="table-data">9AM - 8PM</td>
+                        </tr>
+
+                        <tr class="table-row">
+                            <th class="table-head" scope="row">Sun:</th>
+
+                            <td class="table-data">Closed</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="footer-list">
+
+                    <p class="footer-list-title">Newsletter</p>
+
+                    <p class="newsletter-text">
+                        Authoritatively morph 24/7 potentialities with error-free partnerships.
+                    </p>
+
+                    <form action="" class="newsletter-form">
+                        <input type="email" name="email" required placeholder="Email Address" class="newsletter-input">
+
+                        <button type="submit" class="btnRegister btn-primary">Đăng ký</button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <div class="container">
+
+            <p class="copyright">
+                &copy; 2022 <a href="#" class="copyright-link">CÔNG TY CÔ PHẦN VẬT TƯ Y TẾ </a>. All Rights Reserved
+            </p>
+
+        </div>
+    </div>
+
+</footer>
+</body>
+</html>

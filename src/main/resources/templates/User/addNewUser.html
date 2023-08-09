@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="header :: myHeader"></div>
+    <link href="/css/register.css" rel="stylesheet"/>
+</head>
+<body class="sb-nav-fixed">
+<div th:replace="navbar :: myNavbar"></div>
+<div id="layoutSidenav">
+    <div th:replace="sidebar :: mySidebar"></div>
+    <div id="layoutSidenav_content">
+        <div class="container register">
+            <div class="row">
+                <div class="col-md-3 register-left">
+                    <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+                    <h3>Thêm Tài Khoản Mới</h3>
+                </div>
+                <div class="col-md-11 register-right">
+                    <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">SALE</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">STOCKER</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="technical-tab" data-toggle="tab" href="#technical" role="tab" aria-controls="technical" aria-selected="false">TECHNICIAN</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="shipper-tab" data-toggle="tab" href="#shipper" role="tab" aria-controls="shipper" aria-selected="false">SHIPPER</a>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                            <h3 class="register-heading">Thêm tài khoản Nhân Viên Bán Hàng</h3>
+                            <form class="row register-form " th:object="${user}" th:action="'addNewUser?role=SALE'" method="post">
+                                <h5 th:text="${mess}" style="color: red"></h5>
+                                <h5 th:text="${sucess}" style="color: green"></h5>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input th:field="*{username}" type="text" class="form-control" placeholder="Username *" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input th:field="*{phone}" type="text" class="form-control" placeholder="Phone *"  />
+                                    </div>
+                                    <div class="form-group">
+                                        <input th:field="*{email}" type="email" class="form-control" placeholder="Email *"  />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input th:field="*{password}" type="password" class="form-control" placeholder="Password *" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="confirmPass" type="password" class="form-control" placeholder="Confirm Password *" />
+                                    </div>
+                                </div>
+                                <button type="submit" class="btnRegister"  >Thêm Tài khoản</button>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane fade show " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <h3  class="register-heading">Thêm tài Khoản cho Thủ Kho</h3>
+                            <form class="row register-form " th:object="${user}" th:action="'addNewUser?role=STOCKER'" method="post">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input th:field="*{username}" type="text" class="form-control" placeholder="Username *" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input th:field="*{phone}" type="text" class="form-control" placeholder="Phone *"  />
+                                    </div>
+                                    <div class="form-group">
+                                        <input th:field="*{email}" type="email" class="form-control" placeholder="Email *"  />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input th:field="*{password}" type="password" class="form-control" placeholder="Password *" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="confirmPass" type="password" class="form-control" placeholder="Confirm Password *" />
+                                    </div>
+                                </div>
+                                <button type="submit" class="btnRegister"  >Thêm Tài khoản</button>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane fade show " id="technical" role="tabpanel" aria-labelledby="technical-tab">
+                            <h3  class="register-heading">Thêm tài khoản cho Nhân viên kỹ thuật</h3>
+                            <form class="row register-form " th:object="${user}" th:action="'addNewUser?role=TECHNICIAN'" method="post">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input th:field="*{username}" type="text" class="form-control" placeholder="Username *" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input th:field="*{phone}" type="text" class="form-control" placeholder="Phone *"  />
+                                    </div>
+                                    <div class="form-group">
+                                        <input th:field="*{email}" type="email" class="form-control" placeholder="Email *"  />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input th:field="*{password}" type="password" class="form-control" placeholder="Password *" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="confirmPass" type="password" class="form-control" placeholder="Confirm Password *" />
+                                    </div>
+                                </div>
+                                <button type="submit" class="btnRegister"  >Thêm Tài khoản</button>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane fade show " id="shipper" role="tabpanel" aria-labelledby="shipper-tab">
+                            <h3  class="register-heading">Thêm tài khoản cho Nhân viên Giao hàng</h3>
+                            <form class="row register-form " th:object="${user}" th:action="'addNewUser?role=SHIPPER'" method="post">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input th:field="*{username}" type="text" class="form-control" placeholder="Username *" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input th:field="*{phone}" type="text" class="form-control" placeholder="Phone *"  />
+                                    </div>
+                                    <div class="form-group">
+                                        <input th:field="*{email}" type="email" class="form-control" placeholder="Email *"  />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input th:field="*{password}" type="password" class="form-control" placeholder="Password *" />
+                                    </div>
+                                    <div class="form-group">
+                                        <input name="confirmPass" type="password" class="form-control" placeholder="Confirm Password *" />
+                                    </div>
+                                </div>
+                                <button type="submit" class="btnRegister"  >Thêm Tài khoản</button>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

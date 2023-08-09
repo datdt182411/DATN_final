@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:replace="header :: myHeader"></div>
+</head>
+<body class="sb-nav-fixed">
+<div th:replace="navbar :: myNavbar"></div>
+<div id="layoutSidenav">
+  <div th:replace="sidebar :: mySidebar"></div>
+  <div id="layoutSidenav_content">
+    <div class="container">
+      <br>
+      <div style="color: mediumspringgreen;font-size: larger "th:text="${success}"></div>
+      <hr>
+      <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
+        <li class="breadcrumb-item active">Thông tin bảo hành</a></li>
+      </ol>
+      <br>
+      <div class="row col-12 d-flex ">
+          <div class="card m-3 col-5" style="background-color: #b9dbe5">
+            <div class="card-header">Chi tiết</div>
+            <div class="card-body">
+              <h5 class="card-title">Còn hạn bảo hành</h5>
+              <p class="card-text">Các sản phẩm còn hạn bảo hành sẽ được bảo hành miễn phí</p>
+              <a th:href="@{/ItemMaintenanceOndated}" class="btn btn-primary">Xem chi tiết</a>
+            </div>
+          </div>
+        <div class="card m-3 col-5" style="background-color: #b9dbe5">
+          <div class="card-header">Chi tiết</div>
+          <div class="card-body">
+            <h5 class="card-title">Hết hạn bảo hành</h5>
+            <p class="card-text">Các sản phẩm đã hết hạn bảo hành sẽ được bảo hành theo giá bảo hành công khai của công ty.</p>
+            <a th:href="@{/ItemMaintenanceOutdated}" class="btn btn-primary">Xem chi tiết</a>
+
+
+
+  <!--            <a  th:href="@{/notConfirm}"-->
+  <!--                class="btn btn-primary"> Chưa xác nhận </a>-->
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <div class="row">
+        <div class="col-9">
+          <form th:action="@{/searchByMaintenanceTime}" method="get">
+            <div class="row p-2">
+              <div class="form-group col-4">
+                <label >From Date</label>
+                <input type="date"
+                       name="fromDate"
+                       class="form-control" >
+              </div>
+              <div class="form-group col-4">
+                <label >To Date</label>
+                <input type="date"
+                       name="toDate"
+                       class="form-control" step="any">
+              </div>
+
+              <div class="col-3">
+                <button type="submit" class="btn btn-outline-secondary shadow-sm rounded"
+                        id="search">Search</button>
+              </div>
+
+
+            </div>
+          </form>
+        </div>
+      </div>
+      <br>
+
+      <br>
+      <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+        <tr>
+          <th>Mã bảo hành</th>
+          <th>Mã chi tiết đơn hàng</th>
+          <th>Mã số serial sản phẩm</th>
+          <th>Tên sản phẩm</th>
+          <th>Tên khách hàng</th>
+          <th>Số điện thoại</th>
+          <th>Địa chỉ</th>
+          <th>Ngày kích hoạt bảo hành</th>
+          <th>Ngày hết hạn bảo hành</th>
+          <th>Ngày bảo hành sản phẩm</th>
+          <th colspan="2" style="text-align: center">Options</th>
+        </tr>
+        </thead>
+        <tbody th:if="${#lists.isEmpty(maintenanceOrderList)}">
+        <tr>
+          <td colspan="3" style="color: red;">No Data found</td>
+        </tr>
+        </tbody>
+        <tbody id="myTable">
+        <tr th:each="itemRepairDto : ${maintenanceOrderList}">
+          <td th:text="${itemRepairDto.id}"></td>
+          <td th:text="${itemRepairDto.orderLine.id}"></td>
+          <td th:text="${itemRepairDto.serialNumber}"></td>
+          <td th:text="${itemRepairDto.orderLine.product.name}"></td>
+          <td th:text="${itemRepairDto.orderLine.order.customer.name}"></td>
+          <td th:text="${itemRepairDto.orderLine.order.customer.phone}"></td>
+          <td th:text="${itemRepairDto.orderLine.order.customer.address}"></td>
+          <td th:text="${itemRepairDto.startDate}"></td>
+          <td th:text="${itemRepairDto.endDate}"></td>
+          <td th:text="${itemRepairDto.maintenanceDate}"></td>
+          <td><a
+                  th:href="@{/ItemMaintenanceEdit(id=${itemRepairDto.id})}"
+                  class="btn btn-primary"> Edit </a></td>
+          <td><a
+                  th:href="@{/ItemMaintenanceDelete(id=${itemRepairDto.id})}"
+                  class="btn btn-danger"> Delete </a></td>
+        </tr>
+        </tbody>
+      </table>
+      <a style="font-size: 20px" type="button" href="/ItemMaintenanceCreate"
+         class="btn btn-outline-primary" >
+        Thêm thông tin bảo hành<i class="fa fa-plus"></i>
+      </a>
+
+      <a th:href="@{/Maintenance/export/excel}"  class="btn btn-outline-primary" >Export maintenance file</a>
+    </div>
+
+    <nav aria-label="Page navigation example">
+      Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link btn btn-outline-primary" th:href="@{'/Maintenance/1'}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
+          <a class="page-link" th:href="@{'/Maintenance/' + ${i}}">[[${i}]]</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" th:href="@{'/Maintenance/'+${totalPages}}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+
+    <script type="text/javascript">
+      document.getElementById("myButton").onclick = function() {
+        location.href = "ItemRepairCreate";
+      };
+    </script>
+  </div>
+</div>
+<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

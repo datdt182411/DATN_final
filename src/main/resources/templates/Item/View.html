@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:replace="header :: myHeader"></div>
+</head>
+<body class="sb-nav-fixed">
+	<div th:replace="navbar :: myNavbar"></div>
+	<div id="layoutSidenav">
+		<div th:replace="sidebar :: mySidebar"></div>
+		<div id="layoutSidenav_content">
+			<div class="container">
+				<br>
+				<hr>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
+					<li class="breadcrumb-item active">Sản phẩm trong kho</li>
+				</ol>
+
+				<br>
+				<div class="row">
+					<div class="col-9">
+						<form th:action="@{/searchProduct}" method="get">
+							<div class="row p-2">
+								<div class="col-7">
+									<input type="text" class="form-control"
+										   id="keyword" name="keyword"
+									>
+								</div>
+								<div class="col-3">
+									<button type="submit" class="btn btn-outline-secondary shadow-sm rounded"
+											id="search">Search</button>
+								</div>
+
+							</div>
+						</form>
+					</div>
+				</div>
+				<br>
+				<table class="table table-bordered table-hover">
+					<thead class="thead-light">
+						<tr>
+							<th>ID</th>
+							<th>Ảnh</th>
+							<th>Tên</th>
+							<th>Giá</th>
+							<th>Số lượng trong kho</th>
+							<th>Loại</th>
+							<th>Hãng</th>
+							<th>Trạng thái</th>
+							<th colspan="3" style="text-align: center">Options</th>
+						</tr>
+					</thead>
+					<tbody th:if="${#lists.isEmpty(productList)}">
+						<tr>
+							<td colspan="3" style="color: red;">No Data found</td>
+						</tr>
+					</tbody>
+					<tbody id="myTable">
+						<tr th:each="product : ${productList}">
+							<td th:text="${product.id}"></td>
+							<td >
+								<img width="150" height="150" th:src="'/img/'+${product.photo}">
+							</td>
+							<td th:text="${product.name}"></td>
+							<td th:text="${product.price}"></td>
+							<td th:text="${product.quantity}"></td>
+							<td th:text="${product.type.name}"></td>
+							<td th:text="${product.vendor.name}"></td>
+							<td th:if="${product.status==1}" class="btn-outline-success" > Enable </td>
+							<td th:if="${product.status==0}" class="btn-outline-dark">Disable</td>
+
+							<td><a th:href="@{/ItemEdit(id=${product.id})}"
+								class="btn btn-primary"> Edit </a></td>
+							<td><a th:if="${product.status==1}" th:href="@{/ItemDelete(id=${product.id})}"
+								   class="btn btn-danger"> Disable </a></td>
+							<td><a th:if="${product.status==0}" th:href="@{/ItemEnable(id=${product.id})}"
+								   class="btn btn-success"> Enable </a></td>
+<!--							<td><a th:href="@{/ItemDelete(id=${product.id})}"-->
+<!--								class="btn btn-danger"> Delete </a></td>-->
+						</tr>
+					</tbody>
+				</table>
+				<nav aria-label="Page navigation example">
+					Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
+					<ul class="pagination">
+						<li class="page-item">
+							<a class="page-link btn btn-outline-primary" th:href="@{'/ItemView/1'}" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+						<li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
+							<a class="page-link" th:href="@{'/ItemView/' + ${i}}">[[${i}]]</a>
+						</li>
+						<li class="page-item">
+							<a class="page-link" th:href="@{'/ItemView/'+${totalPages}}" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+
+				<a style="font-size: 20px" type="button" href="ItemCreate"
+						class="btn btn-outline-dark" id="myButton">
+					Add a new item <i class="fa fa-plus"></i>
+				</a>
+
+			</div>
+			<script type="text/javascript">
+				document.getElementById("myButton").onclick = function() {
+					location.href = "ItemCreate";
+				};
+			</script>
+		</div>
+	</div>
+	<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

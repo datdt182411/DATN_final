@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<div th:replace="header :: myHeader"></div>
+</head>
+<body>
+	<div class=" row  container text-center">
+		<div class="contact-image">
+			<img src="https://image.ibb.co/kUagtU/rocket_contact.png" alt="rocket_contact"/>
+		</div>
+		<h3>Chúc mừng bạn đã xác thực tài khoản thành công, hiện tại bạn đã có thể đăng nhập rồi!</h3>
+		<br>
+		<h4><a th:href="@{/login}">Click tại đây để Login</a></h4>
+	</div>
+	<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:replace="header :: myHeader"></div>
+</head>
+    <div class="container">
+      <div class="row">
+
+        <div>&nbsp;</div>
+
+        <div th:if="${title != null}">
+          <h2>[[${title}]]</h2>
+        </div>
+
+        <div th:if="${message != null}">
+          <h3>[[${message}]]</h3>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

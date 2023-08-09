@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiết bị y tế</title>
+    <!--
+        - favicon
+    -->
+    <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+    <!--
+        - custom css link
+    -->
+    <link href="/css/order.css" rel="stylesheet"/>
+    <link
+            href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"
+            rel="stylesheet" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js"
+            crossorigin="anonymous"></script>
+
+    <!-- Start Rating
+       -->
+
+
+    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.0.7/css/star-rating.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.0.7/themes/krajee-svg/theme.css" media="all" rel="stylesheet" type="text/css" />
+
+    <!--
+        - google front link
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+            rel="stylesheet">
+
+    <!--
+        - preload banner
+    -->
+    <!--
+        - btn search
+    -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+          integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <script type="text/javascript" th:src="@{/js/libs/jquery-3.7.0.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/quantity_control.js}"></script>
+    <script type="text/javascript" th:src="@{/js/jquery.number.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/common_modal.js}"></script>
+    <script type="text/javascript" th:src="@{/js/add_to_cart.js}"></script>
+    <script type="text/javascript" th:src="@{/js/review_vote.js}"></script>
+
+
+
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.0.7/js/star-rating.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-star-rating@4.0.7/themes/krajee-svg/theme.js"></script>
+
+
+
+
+</head>
+<body>
+
+
+<!--
+    - #HEADER
+-->
+
+<header class="header " data-header>
+    <div class="container">
+
+        <div class="overlay" data-overlay></div>
+
+        <a href="/" class="logo">
+            <img src="/img/vinamed.svg" width="160" height="50" alt="Footcap logo">
+        </a>
+
+        <button class="nav-open-btn" data-nav-open-btn aria-label="Open Menu">
+            <ion-icon name="menu-outline"></ion-icon>
+        </button>
+
+        <nav class="navbar" data-navbar>
+
+            <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
+                <ion-icon name="close-outline"></ion-icon>
+            </button>
+
+
+            <a href="#" class="logo">
+                <img src="img/vinamed.svg" width="190" height="50" alt="Footcap logo">
+            </a>
+            <!--
+                #List function of Web
+            -->
+            <ul class="navbar-list" style="list-style:none" >
+
+                <li class="navbar-item">
+                    <a href="/" class="navbar-link">TRANG CHỦ</a>
+                </li>
+
+                <li class="navbar-item">
+                    <a href="/intro" class="navbar-link">GIỚI THIỆU</a>
+                </li>
+
+                <li class="navbar-item">
+                    <a href="/product?id=1" class="navbar-link">SẢN PHẨM</a>
+
+                </li>
+                <li class="navbar-item">
+                    <a href="/contact" class="navbar-link">LIÊN HỆ</a>
+                </li>
+
+                <li sec:authorize="hasAnyAuthority('TECHNICIAN','ADMIN','STOCKER','SALE')">
+                    <a href="/home" class="navbar-link"> QUẢN LÝ</a>
+                </li>
+            </ul>
+            <!--
+                #List action of Web
+            -->
+            <ul class="nav-action-list" style="list-style:none">
+                <li>
+                    <a href="" class="nav-action-btn">
+                        <p th:if="${userAuthen}!=null" th:text="'Wellcome :'+ ${userAuthen}" class="">
+                        </p>
+                    </a>
+                </li>
+                <li th:if="${userAuthen}!=null">
+                    <a href="/logout" class="nav-action-btn">
+                        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+                        <p>Đăng Xuất</p>
+                    </a>
+                </li>
+                <li th:if="${userAuthen}==null">
+                    <a href="/login" class="nav-action-btn">
+                        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+                        <p>Đăng Nhập</p>
+                    </a>
+                </li>
+                <li th:if="${userAuthen}==null">
+                    <a href="/register" class="nav-action-btn">
+                        <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+                        <p>Đăng Ký</p>
+                    </a>
+                </li>
+                <div sec:authorize="hasRole('MEMBER')">Text visible to admin.</div>
+                <!--                sec:authorize="hasAnyRole('ADMIN','MEMBER','STOCKER','TECHNICIAN','SALE')"-->
+                <li>
+                    <a href="/order" class="nav-action-btn">
+                        <ion-icon name="bag-outline" aria-hidden="true"></ion-icon>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+</header>
+
+<main>
+    <div class="container pt-5">
+        <div class="row d-flex justify-content-between mt-5">
+            <div class="col-md-6 order-md-1 order-2">
+                <div>
+                    <div class="owl-stage-outer">
+                        <img width="400" height="400" th:src="' img/'+${product.photo}" style="margin-top: 14px">
+                    </div>
+                    <div class="pr-loyalty">
+                        <div class="qr-download">
+                            <img data-src="//cdn.tgdd.vn/mwgcart/nhathuocankhang/images/promote_loyalty/qr.png?v=1"
+                                 class=" lazyloaded" width="72" height="72" alt="Mã Qr Code Quà tặng vip"
+                                 src="//cdn.tgdd.vn/mwgcart/nhathuocankhang/images/promote_loyalty/qr.png?v=1">
+                            <p>Quét để tải App</p>
+                        </div>
+                        <div class="text-area">
+                            <p class="text-area__title">
+                                <img data-src="//cdn.tgdd.vn/mwgcart/nhathuocankhang/images/promote_loyalty/logo.png"
+                                     alt="Logo Nhathuocankhang.com" class=" lazyloaded" width="32" height="32"
+                                     src="//cdn.tgdd.vn/mwgcart/nhathuocankhang/images/promote_loyalty/logo.png"><span>Quà Tặng VIP</span>
+                            </p>
+                            <p class="text-area__content">
+                                Tích &amp; Sử dụng điểm <br> cho khách hàng thân thiết
+                            </p>
+                            <p class="text-area__note">Sản phẩm của tập đoàn MWG</p>
+                        </div>
+                        <div class="download-link">
+                            <a href="http://play.google.com/store/apps/details?id=mwg.tgdd.loyalty" target="_blank">
+                                <img data-src="//cdn.tgdd.vn/mwgcart/nhathuocankhang/images/promote_loyalty/ggplay.png"
+                                     class=" lazyloaded" width="136" height="40" alt="Quà tặng víp google play"
+                                     src="//cdn.tgdd.vn/mwgcart/nhathuocankhang/images/promote_loyalty/ggplay.png">
+                            </a>
+                            <a href="https://apps.apple.com/vn/app/qu%C3%A0-t%E1%BA%B7ng-vip/id1589555369"
+                               target="_blank">
+                                <img data-src="//cdn.tgdd.vn/mwgcart/nhathuocankhang/images/promote_loyalty/appstore.png"
+                                     class=" lazyloaded" width="136" height="40" alt="Quà tặng víp Appstore"
+                                     src="//cdn.tgdd.vn/mwgcart/nhathuocankhang/images/promote_loyalty/appstore.png">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 order-md-3 order-1 ">
+                <div>
+                    <div class="box_productInfor" >
+
+                        <div class="detail-title" data-id="247130" data-cateid="3913" style="margin-top: 14px">
+<!--                            <h1 th:text="${product.name}"></h1>-->
+                            <h2>[[${product.name}]]</h2>
+                        </div>
+
+<!--                        <div class="col-sm-2">-->
+<!--                            <div>-->
+<!--                                <span th:if="${product.quantity > 0}" class="text-success"><b>Còn hàng</b> </span>-->
+<!--                                <span th:if="${product.quantity == 0}" class="text-danger"><b>Hết hàng</b> </span>-->
+
+<!--                            </div>-->
+<!--                        </div>-->
+
+                        <div class="row ml-1">
+                            <div class="col-xs">
+                                <input type="text" class="product-detail-rating-star" dir="ltr" data-size="md"
+                                        th:value="${product.averageRating}"/>
+                                <span th:if="${product.quantity > 0}" class="text-success"><b>Còn hàng</b> </span>
+                                <span th:if="${product.quantity == 0}" class="text-danger"><b>Hết hàng</b> </span>
+                            </div>
+                            <div class="col-xs ml-1 mt-3">
+                                <a th:href="@{'/ratings/' + ${product.id}}">[[${product.reviewCount}]] rating(s)</a>
+                            </div>
+
+                        </div>
+<hr>
+                        <div class="banner-detail" >
+                            <ul class="col-price row-price ">
+                                <li class="list-price-tracking " data-code="9253079000133" data-id="247130"
+                                    data-price="8000" data-dimension7="8000" data-dimension8="0" data-dimension9="True"
+                                    data-dimension10="Kịch bản thường">
+                                    <div class="box-price">
+                                        <span><b style="font-size: x-large ; color: #007bff" th:text="${#numbers.formatCurrency(product.price)}"></b></span>
+                                    </div>
+
+                                    <div th:text="${product.name}">
+                                        <div class="minus">
+                                            <span></span>
+                                        </div>
+                                        <input type="number" value="0" data-value="0" pattern="\d*"
+                                               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                               maxlength="3"
+                                               onkeydown="javascript: return ['Backspace','Delete','ArrowLeft','ArrowRight'].includes(event.code) ? true : !isNaN(Number(event.key)) &amp;&amp; event.code!=='Space'">
+                                        <div class="plus">
+                                            <span></span>
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <ul class="des-infor" style="list-style:none">
+                                <li>
+                                    <b>Công dụng</b>:
+                                    sản phẩm tuyệt vời
+                                </li>
+                                <li>
+                                    Thương hiệu:
+                                    <b th:text="${product.type.name}"></b>
+
+                                </li>
+                                <li>
+                                    Nhà sản xuất
+                                    <b th:text="${product.vendor.name}"></b>
+
+                                </li>
+                                <li>
+                                    Nơi sản xuất:
+                                    <b th:text="${product.vendor.address}"></b>
+
+                                </li>
+
+                                <li>
+                                    <b>Hướng dẫn sử dụng</b>:
+                                    vui lòng xem kỹ hướng dẫn sử dụng trước khi dùng
+                                </li>
+                            </ul>
+
+<!--                            <div th:replace="cart/quantity_control :: quantity_control(1, ${product.id})"> </div>-->
+<!--                            <div class="mt-3">-->
+<!--                                <input type="button" value="Add to Cart" id="buttonAdd2Cart" class="btn btn-primary"  />-->
+<!--                            </div>-->
+
+                            <form method="GET" action="addToCart">
+                            <div class="input-group">
+									<span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-user"></i></span> <input
+                                    value="1"
+                                    name="itemQuantity" placeholder="Enter Item Quantity"
+                                    class="form-control" type="number"
+                                    step="1" required min="1" max="product.quantity">
+                            </div>
+                                <input type="hidden" name="id" th:value="${product.id}"/>
+                                <input type="hidden" name="userid" th:value="${userAuthenId}"/>
+                            <div>
+                            <button th:if="${product.quantity > 0}" type="submit" style="margin-top: 14px">CHỌN MUA</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="Item/product_top_reviews :: content"></div>
+
+</main>
+
+
+<!--<div th:replace="fragments :: modal_dialog"></div>-->
+<!--
+  - #NEWS
+-->
+
+
+<!--
+  - #FOOTER
+-->
+
+
+<!--
+    - #GO TO TOP
+  -->
+
+<script type="text/javascript">
+    contextPath = "[[@{/}]]";
+    productId = "[[${product.id}]]";
+
+
+    decimalSeparator = "[[${DECIMAL_POINT_TYPE == 'COMMA' ? ',' : '.'}]]";
+    thousandSeparator = "[[${THOUSANDS_POINT_TYPE == 'COMMA' ? ',' : '.'}]]";
+</script>
+
+<script>
+    $(".product-detail-rating-star").rating({
+        displayOnly: true,
+        hoverOnClera: false,
+        showCaption: false,
+        theme: 'krajee-svg'
+
+    });
+</script>
+<!--
+    - custom js link
+-->
+<script src="/js/script.js"></script>
+
+
+
+<!--
+    - iomicon link
+-->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>

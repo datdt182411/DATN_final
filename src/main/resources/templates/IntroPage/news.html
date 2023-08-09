@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Footcap - Find your footware</title>
+<!--
+    - favicon
+-->
+<link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+<!--
+    - custom css link
+-->
+<link rel="stylesheet" href="./assets/css/intro.css">
+
+<!--
+    - google front link
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+  rel="stylesheet">
+
+<!-- 
+    - preload banner
+-->
+  <link rel="preload" href="../static/imghero-banner.png" as="image">
+
+<!--
+    - btn search
+-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" 
+integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" 
+crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+<body>
+
+
+    <!--
+        - #HEADER
+    -->
+
+    <header class="header " data-header>
+      <div class="container">
+
+        <div class="overlay" data-overlay></div>
+
+        <a href="home.html" class="logo">
+          <img src="/img/vinamed.svg" width="160" height="50" alt="Footcap logo">
+        </a>
+
+        <button class="nav-open-btn" data-nav-open-btn aria-label="Open Menu">
+          <ion-icon name="menu-outline"></ion-icon>
+        </button>
+
+        <nav class="navbar" data-navbar>
+
+          <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+
+
+          <a href="#" class="logo">
+            <img src="img/vinamed.svg" width="190" height="50" alt="Footcap logo">
+          </a>
+          <!--
+              #List function of Web
+          -->
+          <ul class="navbar-list">
+
+            <li class="navbar-item">
+              <a href="/" class="navbar-link">TRANG CHỦ</a>
+            </li>
+
+            <li class="navbar-item">
+              <a href="/intro" class="navbar-link">GIỚI THIỆU</a>
+            </li>
+
+            <li class="navbar-item">
+              <a href="/product?id=1" class="navbar-link">SẢN PHẨM</a>
+
+            </li>
+            <li class="navbar-item">
+              <a href="/contact" class="navbar-link">LIÊN HỆ</a>
+            </li>
+
+            <li th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+              <a href="/home" class="navbar-link"> QUẢN LÝ</a>
+            </li>
+          </ul>
+          <!--
+              #List action of Web
+          -->
+          <ul class="nav-action-list">
+            <li>
+              <a href="/login" class="nav-action-btn">
+                <p th:if="${userAuthen}!=null" th:text="'Wellcome :'+ ${userAuthen}" class="">
+                </p>
+              </a>
+            </li>
+            <li th:if="${userAuthen}!=null">
+              <a  href="/logout" class="nav-action-btn">
+                <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+                <p>Đăng Xuất</p>
+              </a>
+            </li>
+            <li th:if="${userAuthen}==null">
+              <a href="#" class="nav-action-btn">
+                <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+                <p>Đăng Nhập</p>
+              </a>
+            </li>
+            <li >
+              <a href="/register" class="nav-action-btn">
+                <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+                <p>Đăng Ký Tài Khoản</p>
+              </a>
+            </li>
+            <li sec:authorize="hasAnyRole('ADMIN','MEMBER','STOCKER','TECHNICIAN','SALE')" >
+              <a href="/order" class="nav-action-btn">
+                <ion-icon name="bag-outline" aria-hidden="true"></ion-icon>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+    </header>
+
+    
+  <!--
+    - MAIN
+  -->
+
+    <main>
+      <article>
+    <!--
+          - #Introduce
+      -->
+
+      <section class="section intro">
+        <div class="container">
+          <h2 class="h2 section-intro">TIN TỨC & SỰ KIỆN</h2>
+
+          <h3 class= "section-intro-1" >HIỆU QUẢ ĐIỀU TRỊ LÀ THÀNH CÔNG CỦA DOANH NGHIỆP</h3>
+
+          <p class="section-document">Bác sĩ sẽ giảm áp lực và được bảo vệ tốt hơn khi có những trợ lực từ công nghệ tiên tiến, hiện đại. Bệnh nhân sẽ thêm nhiều cơ hội khám chữa bệnh hiệu quả, ít đau đớn và nhanh bình phục hơn.
+          <br> Với mục tiêu đó, Vimedtec (Công ty Cổ phần Trang Thiết bị Y tế Việt Nam) được các dược sĩ, bác sĩ , chuyên gia cao cấp đào tạo Đức, Hoa Kỳ, có kinh nghiệm làm việc lâu năm trong lĩnh vực y tế và sức khỏe.
+          <br> Với triết lý làm việc “Không ngừng tạo dựng cơ hội thay đổi phát triển cho hiện tại và tương lai y tế Việt Nam” và “Tập trung trọng tâm vào hiệu quả điều trị”
+            Vimedtec hoạt động kinh doanh hoàn toàn lĩnh vực y tế, sức khỏe:  Từ khám điều trị, nghiên cứu sản xuất, nhập khẩu, phân phối kênh nhà thuốc, bệnh viện và thương mại điện tử.
+          <br> Là công ty chuyên nhập khẩu trực tiếp và phân phối thiết bị y tế vật tự hiện đại, chất lượng, phù hợp với sự phát triển của khoa học công nghệ theo chuẩn qui định Bộ Y Tế.
+          <br> Sau 5 năm hoạt động, Vimedtec cung cấp trên 20% tổng số nhà thuốc toàn quốc, Phòng khám chuyên khoa, bệnh viện chuyên ngành (Y Học Thể Thao, Tiêu Hoá, Tai Mũi Họng, Sản Nhi ) và hệ thống nhà thuốc toàn quốc. Vimedtec cung cấp hơn 20 thương hiệu Châu Âu, Hoa Kỳ với trên 60 sản phẩm chất lượng.
+          </p>
+
+          <h3 class="section-intro-2">Tập trung chuyên khoa</h3>
+          <p class="section-document">Nhập khẩu và phân phối trực tiếp sinh phẩm vật tư trang thiết bị y tế chuyên khoa:</p>
+          <ul class="document-list">
+            <li class="document-item"><span style="font-size: 14px"><b><i>Y Học Thể Thao</span></li>
+            <li class="document-item"><span style="font-size: 14px">Tiêu Hoá</span></li>
+            <li class="document-item"><span style="font-size: 14px">Tai Mũi Họng</span></li>
+            <li class="document-item"><span style="font-size: 14px">Sản Nhi</span></li>
+            <li class="document-item"><span style="font-size: 14px">Chấn đoán xét nghiệm </i></b></span></li>
+          </ul>
+
+          <h3 class="section-intro-2">Điểm nổi bật của công ty </h3>
+          <p class="section-document">Các sản phẩm Vimedtec nhập khẩu chủ trọng đối tác Châu Âu, Hoa Kỳ , Quốc gia tiên tiến trong khối G27 đều có chứng nhận xuất xứ; chứng nhận tiêu chuẩn chất lượng ISO,  EC, FDA, FSC chứng nhận đại sứ quán nước sở tại và theo qui chuẩn Bộ Y Tế Việt Nam</p>
+        
+          <h3 class="section-intro-2">Sản phẩm chuyên nghiệp</h3>
+          <ul class="document-list">
+            <li class="document-item"><span style="font-size: 14px">Công ty chuyên sâu lọc chọn hợp tác đối tác cập nhật giải pháp điều trị mới nhất sản phẩm đa dạng an toàn nhất, hiệu quả nhất, chất lượng nhưng giảm thiểu chi phí, phức tạp nhất.</span></li>
+            <li class="document-item"><span style="font-size: 14px">Kinh nghiệm và chuyên nghiệp nhập khẩu 100% sản phẩm, đội ngũ nhập khẩu Vimedtec giảm thiểu rủi ro đối tác nhà máy , thương hiệu nước ngoài</span></li>
+            <img src="../static/imgintro.jpg" width="200" height="200" loading="lazy"
+                      alt="Erbozeta" class="image-intro">
+            <li class="document-title"><span style="font-size: 14px">Vimedtec hợp tác phân phối độc quyền sản phẩm hãng Erbozeta ( Áo )</span></li>
+          </ul>
+
+        </div>
+      </section>
+   
+</article>
+</main>
+
+    <!--
+  - #FOOTER
+    -->
+<footer class="footer">
+
+  <div class="footer-top section">
+    <div class="container">
+
+      <div class="footer-brand">
+
+        <a href="#" class="logo">
+          <img src="../static/img/vinamed.svg" width="160" height="50" alt="Footcap logo">
+        </a>
+
+        <ul class="social-list">
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-facebook"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-twitter"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-pinterest"></ion-icon>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="social-link">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+      <div class="footer-link-box">
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Liên Hệ</p>
+          </li>
+
+          <li>
+            <address class="footer-link">
+              <ion-icon name="location"></ion-icon>
+
+              <span class="footer-link-text">
+                Trụ Sở: Toà G3 Vinhomes Green Bay, Mễ Trì, Nam Từ Liêm, Hà Nội
+              </span>
+            </address>
+          </li>
+
+          <li>
+            <a href="tel: 0243 20 559 29" class="footer-link">
+              <ion-icon name="call"></ion-icon>
+
+              <span class="footer-link-text">Tel / Fax: 0243 20 559 29 - Helpline: 096 99 324 99 </span>
+            </a>
+          </li>
+
+          <li>
+            <a href="mailto: congtycophanvattu@gmail.com" class="footer-link">
+              <ion-icon name="mail"></ion-icon>
+
+              <span class="footer-link-text">congtycophanvattu@gmail.com</span>
+            </a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Tài khoản của tôi</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+
+              <span class="footer-link-text">My Account</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+
+              <span class="footer-link-text">View Cart</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+
+              <span class="footer-link-text">Wishlist</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+
+              <span class="footer-link-text">Compare</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+
+              <span class="footer-link-text">New Products</span>
+            </a>
+          </li>
+
+        </ul>
+
+        <div class="footer-list">
+
+          <p class="footer-list-title">Opening Time</p>
+
+          <table class="footer-table">
+            <tbody>
+
+              <tr class="table-row">
+                <th class="table-head" scope="row">Mon - Tue:</th>
+
+                <td class="table-data">8AM - 10PM</td>
+              </tr>
+
+              <tr class="table-row">
+                <th class="table-head" scope="row">Wed:</th>
+
+                <td class="table-data">8AM - 7PM</td>
+              </tr>
+
+              <tr class="table-row">
+                <th class="table-head" scope="row">Fri:</th>
+
+                <td class="table-data">7AM - 12PM</td>
+              </tr>
+
+              <tr class="table-row">
+                <th class="table-head" scope="row">Sat:</th>
+
+                <td class="table-data">9AM - 8PM</td>
+              </tr>
+
+              <tr class="table-row">
+                <th class="table-head" scope="row">Sun:</th>
+
+                <td class="table-data">Closed</td>
+              </tr>
+
+            </tbody>
+          </table>
+
+        </div>
+
+        <div class="footer-list">
+
+          <p class="footer-list-title">Newsletter</p>
+
+          <p class="newsletter-text">
+            Authoritatively morph 24/7 potentialities with error-free partnerships.
+          </p>
+
+          <form action="" class="newsletter-form">
+            <input type="email" name="email" required placeholder="Email Address" class="newsletter-input">
+
+            <button type="submit" class="btn btn-primary">Đăng ký</button>
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+
+      <p class="copyright">
+        &copy; 2022 <a href="#" class="copyright-link">CÔNG TY CÔ PHẦN VẬT TƯ Y TẾ </a>. All Rights Reserved
+      </p>
+
+    </div>
+  </div>
+
+</footer>
+
+
+<!-- 
+    - #GO TO TOP
+  -->
+
+  <a href="#top" class="go-top-btn active" data-go-top>
+    <ion-icon name="arrow-up-outline"></ion-icon>
+  </a>
+
+
+<!--
+    - custom js link
+-->
+<script src="./assets/js/product.js"></script>
+
+<!--
+    - iomicon link
+-->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="header :: myHeader"></div>
+</head>
+<body class="sb-nav-fixed">
+<div th:replace="navbar :: myNavbar"></div>
+<div id="layoutSidenav">
+    <div th:replace="sidebar :: mySidebar"></div>
+    <!-- Form starts from here -->
+    <div id="layoutSidenav_content">
+        <div class="container">
+            <br>
+            <hr>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
+                <li class="breadcrumb-item active">Thêm Sản Phẩm Mới</li>
+            </ol>
+            <form class="needs-validation" th:action="@{/typeCreate}"
+                  th:object="${type}" method="post" novalidate enctype="multipart/form-data">
+                <!-- Text input-->
+                <fieldset class="border p-2">
+                    <legend class="w-auto"> Thêm loại sản phẩm </legend>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Tên loại sản phẩm</label>
+                        <div class="col-md-4 inputGroupContainer">
+                            <div class="input-group">
+									<span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-user"></i>
+                                    </span> <input name="itemName"
+                                                   placeholder="Enter Item Name" th:field="*{name}"
+                                                   class="form-control" type="text" required>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Text input-->
+
+                    <!-- Sele
+                    ct Basic -->
+                    <!-- Button -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label"></label>
+                        <div class="col-md-4">
+                            <a  href="/type" id="resetBtn" type="reset" class="btn btn-danger ">Quay Lại</a>
+                            <button id="addBtn" type="submit"
+                                    class="btn btn-success float-right">Thêm loại</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<div></div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

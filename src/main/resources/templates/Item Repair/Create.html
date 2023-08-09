@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<div th:replace="header :: myHeader"></div>
+</head>
+<body class="sb-nav-fixed">
+	<div th:replace="navbar :: myNavbar"></div>
+	<div id="layoutSidenav">
+		<div th:replace="sidebar :: mySidebar"></div>
+		<!--- Navbar ends here--->
+		<!-- Form starts from here -->
+		<div id="layoutSidenav_content">
+			<div class="container">
+				<br>
+				<div style="color: red;font-size: larger"  th:text="${fail}"></div>
+
+				<hr>
+				<ol class="breadcrumb mb-4">
+					<li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
+					<li class="breadcrumb-item active">Thêm thông tin bảo hành</li>
+				</ol>
+				<form th:action="@{/ItemRepairCreate}" th:object="${repair}"
+					method="post">
+					<div class="alert alert-danger"
+						th:if="${#fields.hasErrors('global')}">
+						<ul>
+							<li th:each="err : ${#fields.errors('global')}" th:text="${err}"></li>
+						</ul>
+					</div>
+					<fieldset class="border p-2">
+						<legend class="w-auto"> Nhập thông tin bảo hành </legend>
+
+						<div class="form-group">
+							<label for="">Mã sản phẩm</label> <input
+								name="productId"
+								type="number"
+								placeholder="Vendor ID"
+								class="form-control" min="1">
+						</div>
+						<div class="form-group">
+							<label for="">Mô tả lỗi</label> <input
+								placeholder="Description Error" th:field="*{failure}"
+								class="form-control" min="0" step="any">
+
+						</div>
+						<div class="form-group">
+							<label for="">Linh kiện thay thế</label> <input
+								placeholder="Enter replacement component information" th:field="*{replacementComponent}"
+								class="form-control" min="0" step="any">
+
+						</div>
+						<div class="form-group">
+							<label for="">Ngày tiếp nhận</label> <input type="date"
+								placeholder="Repair Cost" th:field="*{failureDate}"
+								class="form-control" step="any">
+						</div>
+						<div class="form-group">
+							<label for="">Ngày bảo hành</label>
+							<input type="date" th:field="*{fixedDate}"
+								   class="form-control"  step="any">
+						</div>
+						<div class="form-group">
+							<label for="">Chi phí bảo hành</label>
+							<input th:field="*{price}"
+								   class="form-control"  type="number" step="any">
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-success float-right">Submit</button>
+							<button type="reset" class="btn btn-danger">Reset</button>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- Form ends here -->
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

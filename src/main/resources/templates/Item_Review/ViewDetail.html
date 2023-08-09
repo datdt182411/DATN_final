@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:replace="header :: myHeader"></div>
+</head>
+<body class="sb-nav-fixed">
+<div th:replace="navbar :: myNavbar"></div>
+<div id="layoutSidenav">
+  <div th:replace="sidebar :: mySidebar"></div>
+  <!-- Form starts from here -->
+  <div id="layoutSidenav_content">
+    <div class="container">
+      <br>
+      <hr>
+      <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
+        <li class="breadcrumb-item active">Chi tiết đánh giá sản phẩm</li>
+      </ol>
+      <form class="needs-validation"
+            th:object="${review}"  novalidate enctype="multipart/form-data">
+        <!-- Text input-->
+        <fieldset class="border p-2">
+          <legend class="w-auto"> Chi tiết đánh giá sản phẩm bên dưới</legend>
+          <div class="form-group">
+            <img width="400" height="400" th:src="'/img/' + ${review.product.photo}" style="float: right; margin-right: 50px; margin-top: 30px">
+            <!--            <input   th:field="*{photo}" type="hidden">-->
+            <input   th:field="*{id}" type="hidden">
+<!--            <input   th:field="*{status}" type="hidden">-->
+            <div class="form-group">
+              <label class="col-md-6 control-label">Tên sản phẩm</label>
+              <div class="col-md-6 inputGroupContainer">
+                <div class="input-group">
+									<span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-user"></i></span>
+                  <span th:text="*{product.name}" class="form-control"></span>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-6 control-label">Tên khách hàng</label>
+              <div class="col-md-6 inputGroupContainer">
+                <div class="input-group">
+									<span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-user"></i></span>
+                  <span th:text="*{user.username}" class="form-control"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-6 control-label">Tiêu đề đánh giá</label>
+              <div class="col-md-6 inputGroupContainer">
+                <div class="input-group">
+									<span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-user"></i></span>
+                  <span th:text="*{headline}" class="form-control"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-6 control-label">Đánh giá sao</label>
+              <div class="col-md-6 inputGroupContainer">
+                <div class="input-group">
+									<span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-user"></i></span>
+                  <span th:text="*{rating}" class="form-control"></span>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-6 control-label">Bình luận</label>
+              <div class="col-md-6 inputGroupContainer">
+                <div class="input-group">
+									<span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-user"></i></span>
+                  <span th:text="*{comment}" class="form-control"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-6 control-label">Thời gian đánh giá</label>
+              <div class="col-md-6 inputGroupContainer">
+                <div class="input-group">
+									<span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-user"></i></span>
+                  <span th:text="*{reviewTime}" class="form-control"></span>
+              </div>
+            </div>
+
+            <!-- Sele
+            ct Basic -->
+            <!-- Button -->
+            <div class="form-group">
+              <label class="col-md-6 control-label"></label>
+              <div class="col-md-6">
+                <!--                                <button id="resetBtn" type="reset" class="btn btn-danger ">Quay Lại</button>-->
+                <a href="/ItemReview" id="resetBtn" type="reset" class="btn btn-danger ">Quay Lại</a>
+
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+<div></div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

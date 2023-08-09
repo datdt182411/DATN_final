@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="header :: myHeader"></div>
+</head>
+<body class="sb-nav-fixed">
+<div th:replace="navbar :: myNavbar"></div>
+<div id="layoutSidenav">
+    <div th:replace="sidebar :: mySidebar"></div>
+    <div id="layoutSidenav_content">
+        <div class="container">
+            <br>
+            <hr>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
+                <li class="breadcrumb-item active"> Quản lý Tài khoản của khách hàng</li>
+            </ol>
+            <br> <br>
+            <table class="table table-bordered table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th>ID</th>
+                    <th>User Name</th>
+
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Status</th>
+                    <th colspan="2" style="text-align: center">Options</th>
+                </tr>
+                </thead>
+                <tbody th:if="${#lists.isEmpty(userList)}">
+                <tr>
+                    <td colspan="3" style="color: red;">No Data found</td>
+                </tr>
+                </tbody>
+                <tbody id="myTable">
+                <tr th:each="user : ${userList}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.username}"></td>
+
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.phone}"></td>
+                    <td th:if="${user.status==1}" class="btn-outline-success" >Đang Hoạt Động </td>
+                    <td th:if="${user.status==0}" class="btn-outline-dark">Vô hiệu hóa</td>
+<!--                    <td><a th:href="@{/ItemEdit/{id}(id=${itemDto.itemId})}"-->
+<!--                           class="btn btn-primary"> Edit </a></td>-->
+                    <td><a th:if="${user.status==1}" th:href="@{/UserDelete(id=${user.id})}"
+                           class="btn btn-danger"> Disable </a></td>
+                    <td><a th:if="${user.status==0}" th:href="@{/UserActive(id=${user.id})}"
+                           class="btn btn-success"> Active </a></td>
+                </tr>
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{'/userManager/1'}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
+                        <a class="page-link" th:href="@{'/userManager/' + ${i}}">[[${i}]]</a>
+                    </li>
+
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{'/userManager/'+${totalPages}}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+</div>
+<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

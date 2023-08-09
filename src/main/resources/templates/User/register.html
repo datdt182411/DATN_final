@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="header :: myHeader"></div>
+    <link href="/css/register.css" rel="stylesheet"/>
+</head>
+<!--<script type="text/javascript" th:src="@{/js/libs/jquery-3.7.0.min.js}"></script>-->
+<body class="sb-nav-fixed">
+<!--<div id="layoutSidenav">-->
+<!--    <div id="layoutSidenav_content">-->
+        <div class="container register">
+            <div class="row">
+                <div class="col-md-3 register-left">
+                    <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+                    <h3>Thêm Tài Khoản Mới</h3>
+                    <a href="/login" type="button" class="btn btn-primary"> LOGIN</a>
+                </div>
+                <div class="col-md-9 register-right">
+                    <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <h3 class="register-heading">Tạo Tài khoản để cùng đặt hàng nhé!</h3>
+                            <form class="row register-form " th:action="@{/create_user}" method="post" th:object="${user}" >
+                                <h5 th:text="${mess}" style="color: red"></h5>
+                                <h5 th:text="${sucess}" style="color: green"></h5>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input th:field="*{username}" type="text" class="form-control" placeholder="Username *" required/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input th:field="*{phone}" type="text" class="form-control" placeholder="Phone *" th:maxlength="10"  required/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input th:field="*{email}" type="email" class="form-control" placeholder="Email *"  required/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input th:field="*{password}" type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control" placeholder="Confirm your password " oninput="checkPasswordMatch(this)" />
+                                    </div>
+                                </div>
+                                <button type="submit" class="btnRegister"  >Thêm Tài khoản</button>
+                            </form>
+                        </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+<!--    </div>-->
+<!--</div>-->
+<div th:replace="footer :: myFooter"></div>
+
+<script type="text/javascript">
+    function checkPasswordMatch(confirmPassword) {
+        if (confirmPassword.value != $("#password").val()) {
+            confirmPassword.setCustomValidity("Passwords do not match!");
+        } else {
+            confirmPassword.setCustomValidity("");
+        }
+    }
+</script>
+
+</body>
+</html>

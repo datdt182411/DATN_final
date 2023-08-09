@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="header :: myHeader"></div>
+</head>
+<body class="sb-nav-fixed">
+<div th:replace="navbar :: myNavbar"></div>
+<div id="layoutSidenav">
+    <div th:replace="sidebar :: mySidebar"></div>
+    <div id="layoutSidenav_content">
+        <div class="container">
+            <br>
+            <hr>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
+                <li class="breadcrumb-item active">Thông tin đơn hàng</li>
+            </ol>
+
+            <br>
+            <div class="row">
+                <div class="col-9">
+                    <form th:action="@{/searchByTime}" method="get">
+                        <div class="row p-2">
+                            <div class="form-group col-4">
+                                <label for="">From Date</label>
+                                <input type="date"
+                                       name="fromDate"
+                                       class="form-control" >
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="">To Date</label>
+                                <input type="date"
+                                       name="toDate"
+                                       class="form-control" step="any">
+                            </div>
+
+                            <div class="col-3">
+                                <button type="submit" class="btn btn-outline-secondary shadow-sm rounded"
+                                        id="search">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br>
+            <a  th:href="@{/listNotConfirm}"
+                class="btn btn-primary"> Chưa xác nhận </a>
+            <a  th:href="@{/listConfirmed}"
+                class="btn btn-primary"> Đã xác nhận </a>
+            <a  th:href="@{/listProcessing}"
+                class="btn btn-primary"> Chờ xử lý </a>
+            <a  th:href="@{/listCanceled}"
+                class="btn btn-primary"> Đơn bị hủy </a>
+            <a  th:href="@{/OrderView}"
+                class="btn btn-primary"> Tất cả </a>
+
+            <table class=" mt-5 table table-bordered table-hover">
+                <thead class="thead-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Ngày đặt hàng</th>
+                    <th>Ngày xác nhận đơn hàng</th>
+                    <th>Tổng hóa đơn</th>
+                    <th>Tên khách hàng</th>
+                    <th>SĐT liên lạc</th>
+                    <th>Tình trạng vận chuyển</th>
+                    <th>Trạng thái đơn hàng</th>
+                    <th colspan="2" style="text-align: center">Options</th>
+                </tr>
+                </thead>
+                <tbody th:if="${#lists.isEmpty(orderList)}">
+                <tr>
+                    <td colspan="3" style="color: red;">No Data found</td>
+                </tr>
+                </tbody>
+                <tbody id="myTable">
+                <tr th:each="order : ${orderList}">
+                    <!--							<p>check = [[${order.getOrderStatus()}]]</p>-->
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${order.orderDate}"></td>
+                    <td th:text="${order.orderConfirmDate}"></td>
+                    <td th:text="${#numbers.formatCurrency(order.amount)}"></td>
+                    <td th:text="${order.customer.name}"></td>
+                    <td th:text="${order.customer.phone}"></td>
+                    <td th:text="${order.getOrderStatus()}"></td>
+                    <td  th:if="${order.status == 1}"> <button class="btn-outline-success">Đã Xác Nhận</button></td>
+                    <td  th:if="${order.status == 0}"> <button class="btn-outline-danger">Chưa Xác Nhận</button></td>
+                    <td  th:if="${order.status == -1}"> <button class="btn-outline-danger">Đang Chờ Hủy Đơn</button></td>
+                    <td  th:if="${order.status == -2}"> <button class="btn-outline-danger">Hủy Đơn</button></td>
+
+
+                    <td>
+                        <a th:if="${order.status == 0 }"  th:href="@{/orderConfirm(id=${order.id})}"
+                           class="btn btn-primary"> Xác Nhận </a>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+                Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{'/listNotConfirm/1'}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}">
+                        <a class="page-link" th:href="@{'/listNotConfirm/' + ${i}}">[[${i}]]</a>
+                    </li>
+
+                    <li class="page-item">
+                        <a class="page-link" th:href="@{'/listNotConfirm/'+${totalPages}}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <a class="btn btn-outline-success" href="https://sandbox.vnpayment.vn/merchantv2/"> Thống kê các đơn hàng đã thanh toán qua Web </a>
+    </div>
+</div>
+<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="header :: myHeader"></div>
+</head>
+<body class="sb-nav-fixed">
+<div th:replace="navbar :: myNavbar"></div>
+<div id="layoutSidenav">
+    <div th:replace="sidebar :: mySidebar"></div>
+    <!-- Form starts from here -->
+    <div id="layoutSidenav_content">
+        <div class="container">
+            <br>
+            <hr>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
+                <li class="breadcrumb-item active">Chỉnh sửa thông tin sản phẩm</li>
+            </ol>
+            <form class="needs-validation" th:action="@{/ItemEdit}"
+                  th:object="${product}" method="post" novalidate enctype="multipart/form-data">
+                <!-- Text input-->
+                <fieldset class="border p-2">
+                    <legend class="w-auto"> Edit thông tin bên dưới</legend>
+                    <div class="form-group">
+                        <img  width="200" height="200" th:src="'/img/'+${product.photo}">
+                        <input   th:field="*{photo}" type="hidden">
+                        <input   th:field="*{id}" type="hidden">
+                        <input   th:field="*{status}" type="hidden">
+                        <div class="form-group">
+                            <label class="col-md-6 control-label">Tên sản phẩm</label>
+                            <div class="col-md-6 inputGroupContainer">
+                                <div class="input-group">
+									<span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-user"></i></span> <input name="itemName"
+                                                                                                placeholder="Enter Item Name"
+                                                                                                th:field="*{name}"
+                                                                                                class="form-control"
+                                                                                                type="text" required>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-6 control-label">Giá sản phẩm</label>
+                            <div class="col-md-6 inputGroupContainer">
+                                <div class="input-group">
+									<span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-user"></i></span> <input name="itemPrice"
+                                                                                                placeholder="Enter Item Price"
+                                                                                                th:field="*{price}"
+                                                                                                class="form-control"
+                                                                                                type="number" step="any"
+                                                                                                required min="1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-6 control-label">Số lượng</label>
+                            <div class="col-md-6 inputGroupContainer">
+                                <div class="input-group">
+									<span class="input-group-addon"><i
+                                            class="glyphicon glyphicon-user"></i></span> <input
+                                        name="itemQuantity" placeholder="Enter Item Quantity"
+                                        th:field="*{quantity}" class="form-control" type="number"
+                                        step="1" required min="1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-6 control-label">Loại sản pẩm</label>
+                            <div class="col-md-6 inputGroupContainer">
+                                <select th:field="*{type}" name="type" id="position" class="form-control">
+                                    <option
+                                            th:each="type : ${typeList}"
+                                            th:value="${type.getId()}">
+                                        <span th:text="${type.getName()}"> </span>
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-6 control-label">Hãng sản xuất </label>
+                            <div class="col-md-6 inputGroupContainer">
+                                <select th:field="*{vendor}" name="vendor" id="" class="form-control">
+                                    <option
+                                            th:each="vendor : ${vendorList}"
+                                            th:value="${vendor.getId()}">
+                                        <span th:text="${vendor.getName()}"> </span>
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Sele
+                        ct Basic -->
+                        <!-- Button -->
+                        <div class="form-group">
+                            <label class="col-md-6 control-label"></label>
+                            <div class="col-md-6">
+<!--                                <button id="resetBtn" type="reset" class="btn btn-danger ">Quay Lại</button>-->
+                                <a href="/ItemView" id="resetBtn" type="reset" class="btn btn-danger ">Quay Lại</a>
+                                <button id="addBtn" type="submit"
+                                        class="btn btn-success float-right">Cập nhật
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+<div></div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

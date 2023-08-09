@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <div th:replace="header :: myHeader"></div>
+</head>
+<body class="sb-nav-fixed">
+<div th:replace="navbar :: myNavbar"></div>
+<div id="layoutSidenav">
+  <div th:replace="sidebar :: mySidebar"></div>
+  <!--- Navbar ends here--->
+  <!-- Form starts from here -->
+  <div id="layoutSidenav_content">
+    <div class="container">
+      <br>
+      <div style="color: red;font-size: larger"  th:text="${fail}"></div>
+
+      <hr>
+      <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/home">Dashboard</a></li>
+        <li class="breadcrumb-item active">Thêm thông tin bảo hành</li>
+      </ol>
+      <form th:action="@{/ItemMaintenanceCreate}" th:object="${maintenance}"
+            method="post">
+        <div class="alert alert-danger"
+             th:if="${#fields.hasErrors('global')}">
+          <ul>
+            <li th:each="err : ${#fields.errors('global')}" th:text="${err}"></li>
+          </ul>
+        </div>
+        <fieldset class="border p-2">
+          <legend class="w-auto"> Nhập thông tin bảo hành </legend>
+
+
+          <div class="form-group">
+            <label for="">Mã chi tiết đơn hàng</label> <input
+                  name="orderLineId"
+                  type="number"
+                  placeholder="Nhập mã chi tiết đơn hàng"
+                  class="form-control" min="1">
+          </div>
+
+          <div class="form-group">
+            <label for="">Mã số serial sản phẩm</label><input name="itemName"
+                                                               placeholder="Nhập mã số serial "
+                                                               th:field="*{serialNumber}"
+                                                               class="form-control"
+                                                               type="text" required>
+          </div>
+
+
+
+<!--          <div class="form-group">-->
+<!--            <label class="col-md-6 control-label">Mã do</label>-->
+<!--            <div class="col-md-6 inputGroupContainer">-->
+<!--              <select th:field="*{type}" name="type" id="position" class="form-control">-->
+<!--                <option-->
+<!--                        th:each="type : ${typeList}"-->
+<!--                        th:value="${type.getId()}">-->
+<!--                  <span th:text="${type.getName()}"> </span>-->
+<!--                </option>-->
+<!--              </select>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="form-group">-->
+<!--            <label for="">Tên khách hàng</label> <input-->
+<!--                  name="customerName"-->
+<!--                  type="string"-->
+<!--                  placeholder="Nhập tên khách hàng"-->
+<!--                  class="form-control" min="1">-->
+<!--          </div>-->
+
+          <div class="form-group">
+            <label for="">Ngày kích hoạt</label>
+            <input
+                  type="date"
+                  placeholder="Ngày bắt đầu" th:field="*{startDate}"
+                  class="form-control">
+
+          </div>
+          <div class="form-group">
+            <label for="">Ngày hết hạn</label>
+            <input type="date"
+                   placeholder="Ngày kết thúc" th:field="*{endDate}"
+                   class="form-control" >
+          </div>
+
+          <div class="form-group">
+            <label for="">Ngày bảo hành sản phẩm</label>
+            <input type="date"
+                   placeholder="Ngày bảo hành sản phẩm" th:field="*{maintenanceDate}"
+                   class="form-control" >
+          </div>
+
+          <div class="form-group">
+            <label for="">Chú thích</label>
+            <input th:field="*{description}"
+                   class="form-control" >
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-success float-right">Submit</button>
+            <button type="reset" class="btn btn-danger">Reset</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Form ends here -->
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<div th:replace="footer :: myFooter"></div>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorator="layout/root_layout"
+      lang="en">
+<body>
+
+<div th:fragment="mySidebar">
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-light"
+             id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <a class="nav-link" href="/home">
+                        <div class="sb-nav-link-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        Homepage
+                    </a>
+                    <div class="sb-sidenav-menu-heading">Modules</div>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse"
+                       data-target="#collapsePages" aria-expanded="false"
+                       aria-controls="collapsePages">
+                        <div class="sb-nav-link-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        Modules
+                        <div class="sb-sidenav-collapse-arrow">
+                            <i class="fas fa-angle-down"></i>
+                        </div>
+                    </a>
+                    <div class="collapse" id="collapsePages"
+                         aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav accordion"
+                             id="sidenavAccordionPages">
+                            <a
+                                    class="nav-link collapsed" href="#" data-toggle="collapse"
+                                    data-target="#pagesCollapseAuth" aria-expanded="false"
+                                    aria-controls="pagesCollapseAuth"> Quản lý tài khoản
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="pagesCollapseAuth"
+                                 aria-labelledby="headingOne"
+                                 data-parent="#sidenavAccordionPages">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a sec:authorize="hasAnyAuthority('ADMIN')" class="nav-link" href="/addNewUser">Add
+                                        New Account</a>
+                                    <a class="nav-link"
+                                       href="/ChangePassword">Change Password</a>
+                                    <a sec:authorize="hasAnyAuthority('ADMIN')" class="nav-link"
+                                       href="/userManager">User Manager</a>
+                                </nav>
+                            </div>
+                            <a sec:authorize="hasAnyAuthority('SALE','ADMIN')"
+                               class="nav-link collapsed" href="#" data-toggle="collapse"
+                               data-target="#pagesCollapseItemIssue" aria-expanded="false"
+                               aria-controls="pagesCollapseItemIssue"> Quản lý đơn hàng
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+
+                            <div class="collapse" id="pagesCollapseItemIssue"
+                                 aria-labelledby="headingOne"
+                                 data-parent="#sidenavAccordionPages">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="/CustomerView">Thông tin khách hàng</a>
+                                    <a class="nav-link" href="/OrderView">Thông tin đơn hàng</a>
+                                </nav>
+                            </div>
+
+
+                            <a sec:authorize="hasAnyAuthority('STOCKER','ADMIN')"
+                               class="nav-link collapsed" href="#" data-toggle="collapse"
+                               data-target="#pagesCollapseItem" aria-expanded="false"
+                               aria-controls="pagesCollapseItem"> Quản lý kho
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="pagesCollapseItem"
+                                 aria-labelledby="headingOne"
+                                 data-parent="#sidenavAccordionPages">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="/ItemView">Sản phẩm trong kho</a>
+                                    <a class="nav-link" href="/ItemReview">Đánh giá sản phẩm </a>
+                                    <a class="nav-link" href="/type">Quản lý loại sản phẩm</a>
+                                </nav>
+                            </div>
+                            <a sec:authorize="hasAnyAuthority('TECHNICIAN','ADMIN')"
+                               class="nav-link collapsed" href="#" data-toggle="collapse"
+                               data-target="#pagesCollapseItemReturn" aria-expanded="false"
+                               aria-controls="pagesCollapseItemReturn"> Quản lý thông tin hậu mãi
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="pagesCollapseItemReturn"
+                                 aria-labelledby="headingOne"
+                                 data-parent="#sidenavAccordionPages">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="/Repair">Bảo Hành sản phẩm</a>
+                                    <a class="nav-link" href="/Maintenance">Thông tin bảo hành</a>
+                                    <a class="nav-link" href="/Shipping">Thông tin vận chuyển đơn hàng</a>
+                                </nav>
+                            </div>
+
+<!--                            <a sec:authorize="hasAnyAuthority('SALE','ADMIN')"-->
+<!--                               class="nav-link collapsed" href="#" data-toggle="collapse"-->
+<!--                               data-target="#pagesCollapseReviewIssue" aria-expanded="false"-->
+<!--                               aria-controls="pagesCollapseReviewIssue"> Quản lý sản phẩm-->
+<!--                                <div class="sb-sidenav-collapse-arrow">-->
+<!--                                    <i class="fas fa-angle-down"></i>-->
+<!--                                </div>-->
+<!--                            </a>-->
+
+<!--                            <div class="collapse" id="pagesCollapseReviewIssue"-->
+<!--                                 aria-labelledby="headingOne"-->
+<!--                                 data-parent="#sidenavAccordionPages">-->
+<!--                                <nav class="sb-sidenav-menu-nested nav">-->
+<!--                                    <a class="nav-link" href="/reports">Đánh giá sản phẩm</a>-->
+<!--                                </nav>-->
+<!--                            </div>-->
+
+                            <a sec:authorize="hasAnyAuthority('SALE','ADMIN')"
+                               class="nav-link collapsed" href="#" data-toggle="collapse"
+                               data-target="#pagesCollapseReportIssue" aria-expanded="false"
+                               aria-controls="pagesCollapseReportIssue"> Báo cáo
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+
+                            <div class="collapse" id="pagesCollapseReportIssue"
+                                 aria-labelledby="headingOne"
+                                 data-parent="#sidenavAccordionPages">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="/reports">Báo cáo doanh số</a>
+                                </nav>
+                            </div>
+
+                            <a sec:authorize="hasAnyAuthority('ADMIN')"
+                               class="nav-link collapsed" href="#" data-toggle="collapse"
+                               data-target="#pagesCollapseFine" aria-expanded="false"
+                               aria-controls="pagesCollapseFine"> Thống kê
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="pagesCollapseFine"
+                                 aria-labelledby="headingOne"
+                                 data-parent="#sidenavAccordionPages">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="/summary">Thống Kê doanh số theo tháng</a>
+                                    <!--										<a-->
+                                    <!--											class="nav-link" href="/FineView">Thống kê tổng quát</a>-->
+                                </nav>
+                            </div>
+
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="sb-sidenav-footer">
+                <div class="small">Logged in as:</div>
+                <p th:text="${userAuthen}"></p>
+            </div>
+        </nav>
+    </div>
+</div>
+</body>
+</html>
