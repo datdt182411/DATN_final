@@ -24,7 +24,7 @@ https://gitlab.com/nongoanh2000/datn?fbclid=IwAR29WdYvv8kqirw__kRJOfTRXqgdH_GET6
 ## Cách sử dụng
 - Bước 1: Vào link git code và thực hiện clone code về máy tính trên Git Bash (Nếu chưa có Git thì có thể xem tại https://www.youtube.com/watch?v=lFiceMCN0Ns để thực hiện cài đặt) bằng câu lệnh sau:
   ```bash
-  git clone https://gitlab.com/nongoanh2000/datn.git
+  git clone https://github.com/datdt182411/DATN_final.git
   ```
 - Bước 2: Tạo các bảng cơ sở dữ liệu với các thuộc tính tương ứng trên MySQL
 - Bước 3: Thực hiện thay đổi kết nối với cơ sở dữ liệu với url, username và password tương ứng với tài khoản trên MySQL khi thực hiện các thao tách sau:
